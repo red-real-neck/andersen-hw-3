@@ -6,14 +6,13 @@ Array.prototype.myFilter = function (cb, context = window) {
     return result;
 }
 
+function createDebounceFunction(delayInMs) {
+    const currentTime = new Date();
+    const timeOut = new Date().setTime(currentTime.getTime() + delayInMs);
+    while (currentTime < timeOut) {
+        currentTime.setTime(new Date().getTime());
+    }
+    return console.log('done');
+}
 
-const arr = [1, 2, 3, 4, 5];
-const arr2 = {
-    1: 1,
-    2: 2
-};
-
-const test = arr.myFilter(function(item) {
-    console.log(this, item);
-}, arr2);
-
+createDebounceFunction(1000);
