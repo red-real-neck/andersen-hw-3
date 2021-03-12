@@ -6,13 +6,17 @@ Array.prototype.myFilter = function (cb, context = window) {
     return result;
 }
 
-function createDebounceFunction(delayInMs) {
-    const currentTime = new Date();
-    const timeOut = new Date().setTime(currentTime.getTime() + delayInMs);
-    while (currentTime < timeOut) {
-        currentTime.setTime(new Date().getTime());
-    }
-    return console.log('done');
+function createDebounceFunction(cb, delayInMs) {
+    timerHandler = setTimeout(cb, delayInMs);
+    clearTimeout(timerHandler);
+    return function() {
+        clearTimeout(timerHandler);
+        timerHandler = setTimeout(cb, delayInMs);
+    };
 }
 
-createDebounceFunction(1000);
+const log100 = () => console.log(100);
+const debounceLog100 = createDebounceFunction(log100, 5000);
+debounceLog100();
+setTimeout(debounceLog100, 2000);
+setTimeout(debounceLog100, 3000); 
