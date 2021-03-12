@@ -1,18 +1,19 @@
-Array.prototype.myFilter = function(cb, array = this) {
+Array.prototype.myFilter = function (cb, context = window) {
     const result = [];
-    for (let i = 0; i < array.length; i++) {
-    if (cb(array[i], i, array )) result.push(array[i]);
+    for (let i = 0; i < this.length; i++) {
+        if ((cb.bind(context))(this[i], i, this)) result.push(this[i]);
     }
     return result;
-  }
+}
 
-  const arr = [1, 2, 3, 4];
-  const kek = [5, 6, 7, 8, 9, 10];
-  const words = ['lala', 'kokoko', 'da', 'net'];
 
-  const test = words.myFilter((item, index, array) => {
-      console.log(item, index, array);
-      return item.length > 3;
-  });
+const arr = [1, 2, 3, 4, 5];
+const arr2 = {
+    1: 1,
+    2: 2
+};
 
-  console.log(test);
+const test = arr.myFilter(function(item) {
+    console.log(this, item);
+}, arr2);
+
