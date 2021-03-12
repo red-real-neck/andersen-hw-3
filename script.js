@@ -1,4 +1,4 @@
-Array.prototype.myFilter = function (cb, context = window) {
+Array.prototype.myFilter = function (cb, context) {
     const result = [];
     for (let i = 0; i < this.length; i++) {
         if ((cb.bind(context))(this[i], i, this)) result.push(this[i]);
